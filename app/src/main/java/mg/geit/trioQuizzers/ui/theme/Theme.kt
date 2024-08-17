@@ -11,11 +11,25 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.colorResource
 import androidx.core.view.WindowCompat
+import mg.geit.trioQuizzers.R
+
+// Déclarez un Brush réutilisable
+@Composable
+fun reusableBrush() : Brush{
+    return  Brush.linearGradient(
+            colors = listOf(
+            colorResource(R.color.colorBrush1),
+            colorResource(R.color.colorBrush2)
+            ))
+}
 
 private val lightScheme = lightColorScheme(
     primary = primaryLight,

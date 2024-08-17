@@ -1,7 +1,9 @@
-package mg.geit.trioQuizzers.ui.theme.components
+package mg.geit.trioQuizzers.ui.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -28,6 +30,8 @@ fun LabelAndInput(
     modifier: Modifier,
     placeholder: String,
     value: String,
+    keyboardOptions: KeyboardOptions,
+    keyboardActions: KeyboardActions,
     onIsTrueChange: (Boolean) -> Unit,
     onValueChange: (String) -> Unit,
 ){
@@ -40,11 +44,10 @@ fun LabelAndInput(
     val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$".toRegex()
     val nameRegex = "^[A-Za-z ]{6,}$".toRegex()
 
-
     // Vérifier la longueur et la validité de l'email
     LaunchedEffect(text.text) {
         if ((label == "Your email" && emailRegex.matches(text.text)) ||
-            (label == "Your full name" && nameRegex.matches(text.text))) {
+            (label == "Your firstName" && nameRegex.matches(text.text))) {
             color = colorScheme.primary // Couleur de succès
             onIsTrueChange(true)
         }
@@ -72,6 +75,8 @@ fun LabelAndInput(
         OutlinedTextField(
             value = text,
             textStyle = LocalTextStyle.current,
+            keyboardOptions = keyboardOptions,
+            keyboardActions = keyboardActions,
             onValueChange = {
                 text = it
                 onValueChange(it.text)

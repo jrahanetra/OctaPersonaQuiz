@@ -2,6 +2,7 @@ package mg.geit.trioQuizzers.ui.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
@@ -18,6 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.withStyle
@@ -38,6 +40,7 @@ fun NumberField(
     modifier: Modifier,
     placeholder: String,
     data: String,
+    keyboardActions: KeyboardActions,
     onIsTrueChange: (Boolean) -> Unit,
     onValueChange: (String) -> Unit
 )
@@ -90,7 +93,9 @@ fun NumberField(
             },
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Next
             ),
+            keyboardActions = keyboardActions,
             shape = MaterialTheme.shapes.large,
         )
     }

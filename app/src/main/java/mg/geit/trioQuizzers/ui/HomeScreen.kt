@@ -17,7 +17,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -32,6 +31,7 @@ import mg.geit.trioQuizzers.ui.components.ButtonStart
 import mg.geit.trioQuizzers.ui.components.ContainerImageBackground
 import mg.geit.trioQuizzers.ui.components.NameOfProject
 import mg.geit.trioQuizzers.ui.theme.AppTheme
+import mg.geit.trioQuizzers.ui.theme.reusableBrush
 
 @Composable
 fun HomeScreen(
@@ -48,11 +48,7 @@ fun HomeScreen(
 fun ContentHomeScreen(
     goToRegistrationActivity: () -> Unit
 ){
-    val brush = Brush.linearGradient(listOf(
-        colorResource(R.color.colorBrush1),
-        colorResource(R.color.colorBrush2)
-    )
-    )
+    val brush = reusableBrush()
     val infiniteTransition = rememberInfiniteTransition(label = "infinite transition")
     val scale by infiniteTransition.animateFloat(
         initialValue = 1f,
