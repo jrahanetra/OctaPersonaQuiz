@@ -9,4 +9,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="colorBrush1">#3550DC</color>
+    <color name="colorBrush2">#27E9F7</color>
+    <color name="errorColor">#DE2E4B</color>
 </resources>
