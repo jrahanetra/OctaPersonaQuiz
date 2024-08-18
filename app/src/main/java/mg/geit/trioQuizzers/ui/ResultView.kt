@@ -189,7 +189,7 @@ fun PersonnalityCardResult(
     )
     Text(
         text = personnality,
-        style = MaterialTheme.tpography.titleMedium,
+        style = MaterialTheme.typography.titleMedium,
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 10.dp),
