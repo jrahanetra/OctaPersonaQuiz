@@ -41,7 +41,7 @@ fun LabelAndInput(
 
     val errorColor = colorResource(R.color.errorColor) // Couleur d'erreur
     // Regex pour valider l'email
-    val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$".toRegex()
+    val emailRegex = "^[A-Za-z0-9+_.-]+@gmail\\.com$".toRegex()
     val nameRegex = "^[A-Za-z ]{6,}$".toRegex()
 
     // Vérifier la longueur et la validité de l'email

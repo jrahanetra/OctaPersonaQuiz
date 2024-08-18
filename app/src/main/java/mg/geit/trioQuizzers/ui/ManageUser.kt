@@ -4,7 +4,12 @@ data class User(
     val idUser: Int,
     val name: String,
     val email: String,
-    val num: String
+    val num: String,
+)
+
+data class UserResponse(
+    val userId: Int,
+    val responses: MutableList<Question> = mutableListOf()
 )
 
 object ListUser {
@@ -14,9 +19,9 @@ object ListUser {
     private var userList: MutableList<User> = mutableListOf(
         User(
             nextId(),
-            "JasonRah",
-            "jrahanetra@gmail.com",
-            "0387777777"
+        "JasonRah",
+        "jrahanetra@gmail.com",
+        "0387777777"
         ),
         User(
             nextId(),
@@ -25,6 +30,9 @@ object ListUser {
         "0386666666"
         )
     )
+
+    private val userResponses: MutableList<UserResponse> = mutableListOf()
+
     /**
      * Obtenir la liste User
      */
@@ -40,13 +48,7 @@ object ListUser {
     fun selectUser(
         idUser: Int
     ) : User{
-        var user1 = User(0,"","","")
-        for(user in userList){
-            if (user.idUser == idUser){
-                user1 = user
-            }
-        }
-        return user1
+        return userList.firstOrNull { it.idUser == idUser } ?: User(0, "", "", "")
     }
 
     /**
@@ -80,11 +82,30 @@ object ListUser {
     {
         userList.forEach {
             when {
-                it.name == nomUser -> return "Nom déjà utilisé"
-                it.email == emailUser -> return "Email déjà utilisé"
-                it.num == numUser -> return "Numéros déjà utilisé"
+                it.name == nomUser -> return "Name already used"
+                it.email == emailUser -> return "Email already used"
+                it.num == numUser -> return "Number already used"
             }
         }
-        return "Utilisateur ajouté avec succés"
+        val newUser = User(nextId(), nomUser, emailUser, numUser)
+        userList.add(newUser)
+        userResponses.add(UserResponse(newUser.idUser))
+        return "Add successful"
+    }
+
+    /**
+     * Associer les réponses d'un utilisateur
+     */
+    fun associateResponsesToUser(userId: Int, responses: List<Question>) {
+        val userResponse = userResponses.firstOrNull { it.userId == userId }
+        userResponse?.responses?.clear()
+        userResponse?.responses?.addAll(responses)
+    }
+
+    /**
+     * Obtenir les réponses d'un utilisateur
+     */
+    fun getResponsesForUser(userId: Int): List<Question>? {
+        return userResponses.firstOrNull { it.userId == userId }?.responses
     }
 }
