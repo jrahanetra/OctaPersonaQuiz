@@ -11,14 +11,18 @@ import androidx.navigation.compose.rememberNavController
 import mg.geit.trioQuizzers.ui.HomeScreen
 import mg.geit.trioQuizzers.ui.ListAccountUser
 import mg.geit.trioQuizzers.ui.ListUser
+import mg.geit.trioQuizzers.ui.QuizScreen
 import mg.geit.trioQuizzers.ui.RegistrationMainView
-import mg.geit.trioQuizzers.ui.components.ShowAboutTheApp
+import mg.geit.trioQuizzers.ui.ResultScreen
+import mg.geit.trioQuizzers.ui.ShowAboutTheApp
 
 enum class OctaPersonaQuizScreen(@StringRes val title: Int) {
     Start(title = R.string.app_name),
     Registration(title = R.string.user_registration),
     ShowUser(title = R.string.show_users),
-    AboutTheApp(title = R.string.about_the_app)
+    AboutTheApp(title = R.string.about_the_app),
+    Questioning(title = R.string.user_questioning),
+    Result(title = R.string.result_questioning)
 }
 
 @Composable
@@ -49,6 +53,17 @@ fun OctaPersonaQuizApp(){
             }
             composable(route = OctaPersonaQuizScreen.AboutTheApp.name){
                 ShowAboutTheApp(
+                    navController
+                )
+            }
+            composable(route = OctaPersonaQuizScreen.Questioning.name){
+                QuizScreen(
+                    navController
+                )
+            }
+            composable(route = OctaPersonaQuizScreen.Result.name){
+                ResultScreen(
+                    navController
                 )
             }
         }

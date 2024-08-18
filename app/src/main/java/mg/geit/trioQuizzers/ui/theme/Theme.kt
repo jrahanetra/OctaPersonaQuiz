@@ -28,7 +28,8 @@ fun reusableBrush() : Brush{
             colors = listOf(
             colorResource(R.color.colorBrush1),
             colorResource(R.color.colorBrush2)
-            ))
+            )
+    )
 }
 
 private val lightScheme = lightColorScheme(

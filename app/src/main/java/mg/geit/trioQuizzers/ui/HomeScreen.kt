@@ -48,7 +48,6 @@ fun HomeScreen(
 fun ContentHomeScreen(
     goToRegistrationActivity: () -> Unit
 ){
-    val brush = reusableBrush()
     val infiniteTransition = rememberInfiniteTransition(label = "infinite transition")
     val scale by infiniteTransition.animateFloat(
         initialValue = 1f,
@@ -72,7 +71,10 @@ fun ContentHomeScreen(
         ButtonStart(
             goToRegistrationActivity,
             scale,
-            brush
+            80,
+            false,
+            reusableBrush(),
+            isNext = false
         )
         Text(
             text = buildAnnotatedString {

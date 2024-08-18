@@ -4,6 +4,8 @@
     <string name="user_registration">User Registration</string>
     <string name="show_users">Show Users</string>
     <string name="about_the_app">About the App</string>
+    <string name="user_questioning">User Questioning</string>
+    <string name="result_questioning">Result Questioning</string>
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>

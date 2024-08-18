@@ -1,4 +1,4 @@
-package mg.geit.trioQuizzers.ui.components
+package mg.geit.trioQuizzers.ui
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
@@ -34,7 +34,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import mg.geit.trioQuizzers.OctaPersonaQuizScreen
 import mg.geit.trioQuizzers.R
+import mg.geit.trioQuizzers.ui.components.MyCardButton
 import mg.geit.trioQuizzers.ui.theme.AppTheme
 import mg.geit.trioQuizzers.ui.theme.reusableBrush
 
@@ -43,7 +45,7 @@ fun ShowAboutTheApp(
     navController: NavController
 ){
     Box {
-        HeaderDetails(navController)
+        HeaderDetails()
         ContentDetailsApp(navController)
     }
 }
@@ -53,7 +55,6 @@ fun ShowAboutTheApp(
  */
 @Composable
 fun HeaderDetails(
-    navController: NavController
 )
 {
     Column(
@@ -151,7 +152,7 @@ fun ContentDetailsApp(
         Column (
             modifier = Modifier.padding(
                 top = 20.dp,
-                start = 30.dp
+                start = 30.dp,
             )
         ){
             ElementDetail(
@@ -172,7 +173,6 @@ fun ContentDetailsApp(
             text = "Please , be honest with yourself because :",
             style = MaterialTheme.typography.labelMedium,
             modifier = Modifier.padding(
-                top = 15.dp,
                 start = 25.dp,
                 end = 10.dp
             )
@@ -181,7 +181,7 @@ fun ContentDetailsApp(
         Column (
             modifier = Modifier
                 .padding(
-                    top = 20.dp,
+                    top = 15.dp,
                     start = 30.dp,
                 )
         ){
@@ -191,11 +191,11 @@ fun ContentDetailsApp(
         }
 
         Text(
-            text = "Click submit if you are sure you want to complete all the quizzes",
+            text = "Click submit if you are sure you want to complete all the quiz",
             style = MaterialTheme.typography.labelMedium,
             modifier = Modifier
                 .padding(
-                    top = 10.dp,
+                    top = 5.dp,
                     start = 30.dp,
                     bottom = 30.dp
                 )
@@ -206,8 +206,9 @@ fun ContentDetailsApp(
             brush = reusableBrush()
         ){
             /**
-             * ASK QUESTION
+             * NAVIGATE COMPOSANT TO ASK QUESTION
              */
+            navController.navigate(OctaPersonaQuizScreen.Questioning.name)
         }
     }
 }
@@ -228,7 +229,8 @@ fun ElementDetail(
             contentDescription = "",
             modifier = Modifier
                 .padding(end = 10.dp)
-                .size(30.dp)
+                .size(30.dp),
+            tint = Color.Yellow
         )
         Column {
             Text(
@@ -253,7 +255,7 @@ fun HowYouShouldBeToDo(
     Row(
         modifier = Modifier.padding(
             end = 30.dp,
-            bottom = 13.dp
+            bottom = 5.dp
         )
     ) {
         Icon(
@@ -273,7 +275,7 @@ fun HowYouShouldBeToDo(
 )
 @Preview(showBackground = true)
 @Composable
-fun ShowPreview(){
+fun ShowPreview1(){
     AppTheme {
         Surface(tonalElevation = 10.dp){
             ShowAboutTheApp(

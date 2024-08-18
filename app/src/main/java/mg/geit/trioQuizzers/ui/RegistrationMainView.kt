@@ -152,13 +152,13 @@ fun ContentView(
         )
         Text(
             text = buildAnnotatedString {
-                append("Vous avez déjà un compte? ")
+                append("Have you an account? ")
                 withStyle(style = SpanStyle(color = colorResource(R.color.blue_sky1))) {
                     append("Login")
                 }
             },
             modifier = Modifier
-                .padding(bottom = 20.dp)
+                .padding(bottom = 10.dp)
                 .clickable {
                     navController.navigate(OctaPersonaQuizScreen.ShowUser.name)
                 }
@@ -177,6 +177,11 @@ fun ContentView(
                     Log.i("Try", "GOOD")
                     //ADD NEW USER
                     errorVerification = listUser.addUser(name, email, number)
+
+                    //IF SUCCESSFUL GO TO NEXT ROUTE
+                    if (errorVerification == "Add successful"){
+                        navController.navigate(OctaPersonaQuizScreen.AboutTheApp.name)
+                    }
                 }
                 else{
                     errorVerification = when {

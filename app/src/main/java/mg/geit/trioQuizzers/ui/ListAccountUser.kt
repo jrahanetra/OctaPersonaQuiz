@@ -4,7 +4,6 @@ import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,7 +17,6 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.CardDefaults
@@ -40,63 +38,19 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import mg.geit.trioQuizzers.OctaPersonaQuizScreen
 import mg.geit.trioQuizzers.R
+import mg.geit.trioQuizzers.ui.components.Header
 import mg.geit.trioQuizzers.ui.theme.AppTheme
-import mg.geit.trioQuizzers.ui.theme.reusableBrush
 
 @Composable
 fun ListAccountUser(
     navController: NavController
 ){
     Box {
-        Header(navController)
+        Header(
+            navController,
+            OctaPersonaQuizScreen.Registration.name
+        )
         ContentListUser(navController)
-    }
-}
-
-/**
- * EN-TÊTE DU LISTACCOUNTUSER
- */
-@Composable
-fun Header(
-    navController: NavController
-){
-    Box(
-        modifier = Modifier
-            .background(reusableBrush())
-            .height(96.dp)
-            .fillMaxWidth()// Standard AppBar height
-    ) {
-        Column (
-            modifier = Modifier
-                .height(80.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ){
-            IconButton(
-                onClick = {
-                    navController.navigate(OctaPersonaQuizScreen.Registration.name)
-                },
-            )
-            {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Return to the previous activity",
-                )
-            }
-        }
-        Column (
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(80.dp)
-                .padding(start = 40.dp),
-            verticalArrangement = Arrangement.Center,
-        ){
-            Text(
-                text = "OctaPersonnalityQuiz",
-                modifier = Modifier.padding(horizontal = 50.dp),
-                style = MaterialTheme.typography.titleMedium
-            )
-        }
     }
 }
 
@@ -149,7 +103,9 @@ fun ShowAuser(
             .height(76.dp)
             .width(500.dp)
             .padding(8.dp),
-        onClick = { /* Action lorsque l'utilisateur clique sur la carte */ }
+        onClick = {
+            navController.navigate(OctaPersonaQuizScreen.AboutTheApp.name)
+        }
     ) {
         Row(
             modifier = Modifier
