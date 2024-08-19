@@ -34,7 +34,7 @@ fun LabelAndInput(
     keyboardActions: KeyboardActions,
     onIsTrueChange: (Boolean) -> Unit,
     onValueChange: (String) -> Unit,
-){
+) {
     val colorScheme = MaterialTheme.colorScheme
     var color by remember { mutableStateOf(colorScheme.errorContainer) }
     var text by remember { mutableStateOf(TextFieldValue(value)) }
@@ -46,12 +46,12 @@ fun LabelAndInput(
 
     // Vérifier la longueur et la validité de l'email
     LaunchedEffect(text.text) {
-        if ((label == "Your email" && emailRegex.matches(text.text)) ||
-            (label == "Your firstName" && nameRegex.matches(text.text))) {
+        if ((label == "Email" && emailRegex.matches(text.text)) ||
+            (label == "Noms" && nameRegex.matches(text.text))
+        ) {
             color = colorScheme.primary // Couleur de succès
             onIsTrueChange(true)
-        }
-        else{
+        } else {
             color = errorColor
             onIsTrueChange(false)
         }

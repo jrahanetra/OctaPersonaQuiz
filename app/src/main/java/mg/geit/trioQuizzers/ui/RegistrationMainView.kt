@@ -2,7 +2,6 @@ package mg.geit.trioQuizzers.ui
 
 import android.annotation.SuppressLint
 import android.content.res.Configuration
-import android.util.Log
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
@@ -30,6 +29,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.ImeAction
@@ -55,7 +55,7 @@ import mg.geit.trioQuizzers.ui.theme.reusableBrush
 fun RegistrationMainView(
     listUser: ListUser,
     navController: NavController
-){
+) {
     ContentView(listUser, navController)
 }
 
@@ -67,7 +67,7 @@ fun RegistrationMainView(
 fun ContentView(
     listUser: ListUser,
     navController: NavController
-){
+) {
     val brush = reusableBrush()
     var name by remember { mutableStateOf("") }
     var isNameTrue by remember { mutableStateOf(false) }
@@ -77,12 +77,13 @@ fun ContentView(
     var isEmailTrue by remember { mutableStateOf(false) }
     var errorVerification by remember { mutableStateOf("") }
     val infiniteTransition = rememberInfiniteTransition(label = "infinite transition")
-    // Create FocusRequester for each input field
+
+    // FocusRequester pour tous les textFilds
     val nameFocusRequester = remember { FocusRequester() }
     val numberFocusRequester = remember { FocusRequester() }
     val emailFocusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
-    val keyboardController =    LocalSoftwareKeyboardController.current
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     val scale by infiniteTransition.animateFloat(
         initialValue = 1f,
@@ -93,17 +94,17 @@ fun ContentView(
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
-    ){
+    ) {
         Spacer(modifier = Modifier.padding(top = 20.dp))
         NameOfProject(scale = scale)
         Spacer(modifier = Modifier.padding(vertical = 10.dp))
         ContainerImage()
         Text(
-            text = "My Profil",
+            text = stringResource(R.string.mon_profil),
             style = MaterialTheme.typography.titleLarge
         )
         LabelAndInput(
-            label = "Your firstName",
+            label = stringResource(R.string.noms),
             modifier = Modifier
                 .padding(top = 40.dp, bottom = 20.dp)
                 .focusRequester(nameFocusRequester),
@@ -115,11 +116,11 @@ fun ContentView(
             keyboardActions = KeyboardActions(
                 onNext = { numberFocusRequester.requestFocus() }
             ),
-            onIsTrueChange = { isNameTrue = it},
-            onValueChange = { name = it}
+            onIsTrueChange = { isNameTrue = it },
+            onValueChange = { name = it }
         )
         NumberField(
-            label = "Your phone number",
+            label = stringResource(R.string.num_ros),
             modifier = Modifier
                 .padding(bottom = 20.dp)
                 .focusRequester(numberFocusRequester),
@@ -128,11 +129,11 @@ fun ContentView(
             keyboardActions = KeyboardActions(
                 onNext = { emailFocusRequester.requestFocus() }
             ),
-            onIsTrueChange = { isNumberTrue = it},
-            onValueChange = {number = it}
+            onIsTrueChange = { isNumberTrue = it },
+            onValueChange = { number = it }
         )
         LabelAndInput(
-            label = "Your email",
+            label = stringResource(R.string.email),
             modifier = Modifier
                 .padding(bottom = 40.dp)
                 .focusRequester(emailFocusRequester),
@@ -147,14 +148,14 @@ fun ContentView(
                     focusManager.clearFocus() // Défocus de tous les champs
                 }
             ),
-            onIsTrueChange = { isEmailTrue = it},
-            onValueChange = {email = it}
+            onIsTrueChange = { isEmailTrue = it },
+            onValueChange = { email = it }
         )
         Text(
             text = buildAnnotatedString {
-                append("Have you an account? ")
+                append(stringResource(R.string.avez_vous_d_j_un_compte))
                 withStyle(style = SpanStyle(color = colorResource(R.color.blue_sky1))) {
-                    append("Login")
+                    append(stringResource(R.string.se_connecter))
                 }
             },
             modifier = Modifier
@@ -170,24 +171,22 @@ fun ContentView(
         )
 
         MyCardButton(
-            nameOfAction = "Start Quiz",
+            nameOfAction = stringResource(R.string.commencer_la_quiz),
             brush,
             onSubmitAction = {
-                if (isEmailTrue && isNumberTrue && isNameTrue){
-                    Log.i("Try", "GOOD")
+                if (isEmailTrue && isNumberTrue && isNameTrue) {
                     //ADD NEW USER
                     errorVerification = listUser.addUser(name, email, number)
 
                     //IF SUCCESSFUL GO TO NEXT ROUTE
-                    if (errorVerification == "Add successful"){
-                        navController.navigate(OctaPersonaQuizScreen.AboutTheApp.name)
+                    if (errorVerification == "Ajouté avec succès") {
+                        navController.navigate("${OctaPersonaQuizScreen.AboutTheApp.name}/$name")
                     }
-                }
-                else{
+                } else {
                     errorVerification = when {
-                        !isNameTrue -> "Name not correct"
-                        !isNumberTrue -> "Number not correct"
-                        !isEmailTrue -> "Email not correct"
+                        !isNameTrue -> "Vérifiez votre Nom (+4 de Caractères et uniques)"
+                        !isNumberTrue -> "Vérifiez votre numéros (10 chiffres et unique)"
+                        !isEmailTrue -> "Vérifiez votre email unique"
                         else -> ""
                     }
                 }
@@ -202,14 +201,15 @@ fun ContentView(
 )
 @Preview(showBackground = true)
 @Composable
-fun ShowPreviewListAccount(){
+fun ShowPreviewListAccount() {
     AppTheme {
-        Surface (
+        Surface(
             tonalElevation = 10.dp
-        ){
+        ) {
             ContentView(
                 ListUser,
-                rememberNavController())
+                rememberNavController()
+            )
         }
     }
 }

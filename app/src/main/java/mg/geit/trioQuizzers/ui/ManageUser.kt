@@ -5,6 +5,7 @@ data class User(
     val name: String,
     val email: String,
     val num: String,
+    var result: Map<String, Int>
 )
 
 data class UserResponse(
@@ -16,18 +17,40 @@ object ListUser {
     private var currentId = 0
     private fun nextId() = ++currentId
 
+    private var resultQuiz: Map<String, Int> = mapOf()
+
     private var userList: MutableList<User> = mutableListOf(
         User(
             nextId(),
-        "JasonRah",
-        "jrahanetra@gmail.com",
-        "0387777777"
+            "JasonRah",
+            "jrahanetra@gmail.com",
+            "0387777777",
+            mapOf(
+                "bienfaiteur" to 40,
+                "leader" to 40,
+                "médiateur" to 34,
+                "visionnaire" to 30,
+                "célébrité" to 20,
+                "insoumis" to 10,
+                "conservateur" to 0,
+                "épicurien" to 0,
+            )
         ),
         User(
             nextId(),
-        "Anthony",
-        "anthony@gmail.com",
-        "0386666666"
+            "Anthony",
+            "anthony@gmail.com",
+            "0386666666",
+            mapOf(
+                "bienfaiteur" to 40,
+                "célébrité" to 40,
+                "médiateur" to 34,
+                "leader" to 30,
+                "visionnaire" to 30,
+                "insoumis" to 15,
+                "conservateur" to 12,
+                "épicurien" to 12,
+            )
         )
     )
 
@@ -36,7 +59,7 @@ object ListUser {
     /**
      * Obtenir la liste User
      */
-    fun getListUser() : MutableList<User>{
+    fun getListUser(): MutableList<User> {
         return this.userList
     }
 
@@ -47,8 +70,19 @@ object ListUser {
      */
     fun selectUser(
         idUser: Int
-    ) : User{
-        return userList.firstOrNull { it.idUser == idUser } ?: User(0, "", "", "")
+    ): User {
+        return userList.firstOrNull { it.idUser == idUser } ?: User(0, "", "", "", mapOf())
+    }
+
+    /**
+     * FONCTION POUR SÉLÉCTIONNER UN USER PAR SON ID
+     * @param nameStr : String qui est l'id de l'user
+     * @return User cela retourne l'user qui a pour id, idUSER donné en paramètre
+     */
+    fun selectUserByName(
+        nameStr: String
+    ): User {
+        return userList.firstOrNull { it.name == nameStr } ?: User(0, "", "", "", mapOf())
     }
 
     /**
@@ -58,8 +92,7 @@ object ListUser {
      */
     fun removeUser(
         idUser: Int
-    ): MutableList<User>
-    {
+    ): MutableList<User> {
         val produit = selectUser(idUser)
         produit.let {
             userList.remove(it)
@@ -78,34 +111,17 @@ object ListUser {
         nomUser: String,
         emailUser: String,
         numUser: String
-    ) : String
-    {
+    ): String {
         userList.forEach {
             when {
-                it.name == nomUser -> return "Name already used"
-                it.email == emailUser -> return "Email already used"
-                it.num == numUser -> return "Number already used"
+                it.name == nomUser -> return "Vérifiez votre Nom (+4 de Caractères et unique)"
+                it.email == emailUser -> return "Vérifiez votre email unique"
+                it.num == numUser -> return "Vérifiez votre numéros (10 chiffres et unique)"
             }
         }
-        val newUser = User(nextId(), nomUser, emailUser, numUser)
+        val newUser = User(nextId(), nomUser, emailUser, numUser, resultQuiz)
         userList.add(newUser)
         userResponses.add(UserResponse(newUser.idUser))
-        return "Add successful"
-    }
-
-    /**
-     * Associer les réponses d'un utilisateur
-     */
-    fun associateResponsesToUser(userId: Int, responses: List<Question>) {
-        val userResponse = userResponses.firstOrNull { it.userId == userId }
-        userResponse?.responses?.clear()
-        userResponse?.responses?.addAll(responses)
-    }
-
-    /**
-     * Obtenir les réponses d'un utilisateur
-     */
-    fun getResponsesForUser(userId: Int): List<Question>? {
-        return userResponses.firstOrNull { it.userId == userId }?.responses
+        return "Ajouté avec succès"
     }
 }

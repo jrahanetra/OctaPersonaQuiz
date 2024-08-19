@@ -16,8 +16,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import mg.geit.trioQuizzers.R
 import mg.geit.trioQuizzers.ui.theme.reusableBrush
 
 /**
@@ -27,19 +29,19 @@ import mg.geit.trioQuizzers.ui.theme.reusableBrush
 fun Header(
     navController: NavController,
     route: String
-){
+) {
     Box(
         modifier = Modifier
             .background(reusableBrush())
             .height(96.dp)
-            .fillMaxWidth()// Standard AppBar height
+            .fillMaxWidth()
     ) {
-        Column (
+        Column(
             modifier = Modifier
                 .height(80.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
-        ){
+        ) {
             IconButton(
                 onClick = {
                     navController.navigate(route)
@@ -48,19 +50,19 @@ fun Header(
             {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Return to the previous activity",
+                    contentDescription = stringResource(R.string.retourner_dans_l_activit_pr_c_dente),
                 )
             }
         }
-        Column (
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(80.dp)
                 .padding(start = 40.dp),
             verticalArrangement = Arrangement.Center,
-        ){
+        ) {
             Text(
-                text = "OctaPersonnalityQuiz",
+                text = stringResource(R.string.octapersonaquiz),
                 modifier = Modifier.padding(horizontal = 50.dp),
                 style = MaterialTheme.typography.titleMedium
             )

@@ -121,7 +121,7 @@ object ListQuestions {
         val questionsMap: Map<String, List<String>> = gson.fromJson(questionsJson, mapType)
 
         questionsMap.forEach { (personality, questionTexts) ->
-            val idPersonnality = personalityMap[personality] ?: error("Personality not found")
+            val idPersonnality = personalityMap[personality] ?: error("Personnalité pas trouvée")
             questionTexts.forEach { questionText ->
                 val questionNumber = questionText.substringBefore(" ").removePrefix("Q").toInt()
                 questions.add(
@@ -172,7 +172,7 @@ object ListQuestions {
     }
 
     /**
-     * Function to select Personality
+     * Function pour séléctionner un profil
      */
     fun getPersonality(id: Int): String{
         return this.personalityMap.keys.toList()[id]

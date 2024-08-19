@@ -47,4 +47,35 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <string name="trouves_ta_personnalit_avec">Trouves ta personnalité avec</string>
+    <string name="cr_e_par">"Créé par "</string>
+    <string name="trinome">Trinome</string>
+    <string name="mon_profil">Mon Profil</string>
+    <string name="noms">Noms</string>
+    <string name="num_ros">Numéros</string>
+    <string name="email">Email</string>
+    <string name="avez_vous_d_j_un_compte">"Avez-vous déjà un compte? "</string>
+    <string name="se_connecter">Se connecter</string>
+    <string name="commencer_la_quiz">Commencer la quiz</string>
+    <string name="retourner_dans_l_activit_pr_c_dente">Retourner dans l\'activité précédente</string>
+    <string name="d_tails_du_quiz">Détails du Quiz</string>
+    <string name="octapersonaquiz">OctaPersonaQuiz</string>
+    <string name="d_couvre_ta_personnalit">Découvre ta personnalité</string>
+    <string name="brief_explication_propos_du_quiz">Brief explication à propos du quiz :</string>
+    <string name="_64_questions">64 Questions</string>
+    <string name="avec_5_choix">Avec 5 choix</string>
+    <string name="_30_min">30 Min</string>
+    <string name="dur_e_total_du_quiz">Durée total du quiz</string>
+    <string name="connais_tes_3_personnalit_s">Connais tes 3 personnalités</string>
+    <string name="et_trouves_qui_est_tu">Et trouves qui est-tu</string>
+    <string name="s_il_vous_pla_t_soyez_honn_te_car">S\'il vous plaît, soyez honnête car :</string>
+    <string name="vous_faites_cette_application_pour_vous_conna_tre">Vous faites cette application pour vous connaître.</string>
+    <string name="avec_des_fausses_informations_le_r_sultat_sera_non_pr_cis">Avec des fausses informations, le résultat sera non précis.</string>
+    <string name="tu_peux_tre_plus_disciplin_et_heureux">Tu peux être plus discipliné et heureux.</string>
+    <string name="cliquer_commencer_si_vous_tes_pr_t_r_pondre_toutes_les_questions">Cliquer commencer si vous êtes prêt à répondre à toutes les questions.</string>
+    <string name="commencer">COMMENCER</string>
+    <string name="terminer">TERMINER</string>
+    <string name="votre_dernier_profil_est_le">Votre dérnier profil est le …</string>
+    <string name="tu_es">Tu es…</string>
+    <string name="finir">FINIR</string>
 </resources>

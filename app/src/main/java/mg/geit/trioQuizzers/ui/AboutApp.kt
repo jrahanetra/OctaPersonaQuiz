@@ -15,10 +15,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -30,6 +31,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -42,11 +44,12 @@ import mg.geit.trioQuizzers.ui.theme.reusableBrush
 
 @Composable
 fun ShowAboutTheApp(
-    navController: NavController
-){
+    navController: NavController,
+    name: String
+) {
     Box {
-        HeaderDetails()
-        ContentDetailsApp(navController)
+        HeaderDetails(navController)
+        ContentDetailsApp(navController, name)
     }
 }
 
@@ -55,38 +58,41 @@ fun ShowAboutTheApp(
  */
 @Composable
 fun HeaderDetails(
-)
-{
+    navController: NavController
+) {
     Column(
         modifier = Modifier
             .background(reusableBrush())
             .height(306.dp)
-            .fillMaxWidth()// Standard AppBar height
+            .fillMaxWidth()
             .padding(top = 20.dp)
     ) {
-        Box (
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(80.dp)
                 .background(
                     MaterialTheme.colorScheme.surfaceColorAtElevation(10.dp)
                 ),
-        ){
-            Row (
+        ) {
+            Row(
                 modifier = Modifier.fillMaxHeight(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
-            ){
-                Icon(
-                    imageVector = Icons.Default.Info,
-                    contentDescription = "Icon Info",
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .padding(start = 40.dp)
-                        .size(40.dp)
+            ) {
+                IconButton(
+                    onClick = {
+                        navController.navigate(OctaPersonaQuizScreen.Registration.name)
+                    },
                 )
+                {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = stringResource(R.string.retourner_dans_l_activit_pr_c_dente),
+                    )
+                }
                 Text(
-                    text = "Detail Quiz",
+                    text = stringResource(R.string.d_tails_du_quiz),
                     modifier = Modifier
                         .padding(
                             vertical = 20.dp,
@@ -105,19 +111,19 @@ fun HeaderDetails(
             }
         }
 
-        Column (
+        Column(
             modifier = Modifier.padding(
                 start = 30.dp,
                 top = 20.dp
             )
-        ){
+        ) {
             Text(
-                text = "Personality Quiz",
+                text = stringResource(R.string.octapersonaquiz),
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.padding(bottom = 10.dp)
             )
             Text(
-                text = "Know who are you",
+                text = stringResource(R.string.d_couvre_ta_personnalit),
                 style = MaterialTheme.typography.bodyMedium
             )
         }
@@ -129,8 +135,9 @@ fun HeaderDetails(
  */
 @Composable
 fun ContentDetailsApp(
-    navController: NavController
-){
+    navController: NavController,
+    name: String
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -139,9 +146,9 @@ fun ContentDetailsApp(
             .background(
                 MaterialTheme.colorScheme.surfaceColorAtElevation(10.dp)
             ) // Utilise la couleur de fond du thème
-    ){
+    ) {
         Text(
-            text = "Brief explanation about this quiz :",
+            text = stringResource(R.string.brief_explication_propos_du_quiz),
             style = MaterialTheme.typography.labelLarge,
             modifier = Modifier.padding(
                 top = 50.dp,
@@ -149,28 +156,28 @@ fun ContentDetailsApp(
             )
         )
 
-        Column (
+        Column(
             modifier = Modifier.padding(
                 top = 20.dp,
                 start = 30.dp,
             )
-        ){
+        ) {
             ElementDetail(
-                title = "64 Questions",
-                explanations = "With 5 choices"
+                title = stringResource(R.string._64_questions),
+                explanations = stringResource(R.string.avec_5_choix)
             )
             ElementDetail(
-                title = "30 Min",
-                explanations = "Total duration of quiz"
+                title = stringResource(R.string._30_min),
+                explanations = stringResource(R.string.dur_e_total_du_quiz)
             )
             ElementDetail(
-                title = "Know you 3 first profiles ",
-                explanations = "And find who you are"
+                title = stringResource(R.string.connais_tes_3_personnalit_s),
+                explanations = stringResource(R.string.et_trouves_qui_est_tu)
             )
         }
 
         Text(
-            text = "Please , be honest with yourself because :",
+            text = stringResource(R.string.s_il_vous_pla_t_soyez_honn_te_car),
             style = MaterialTheme.typography.labelMedium,
             modifier = Modifier.padding(
                 start = 25.dp,
@@ -178,20 +185,20 @@ fun ContentDetailsApp(
             )
         )
 
-        Column (
+        Column(
             modifier = Modifier
                 .padding(
                     top = 15.dp,
                     start = 30.dp,
                 )
-        ){
-            HowYouShouldBeToDo(explanations = "You do this personalities test  to know more about you.")
-            HowYouShouldBeToDo(explanations = "You could make some changement with it.")
-            HowYouShouldBeToDo(explanations = "You can be more disciplined and happy.")
+        ) {
+            HowYouShouldBeToDo(explanations = stringResource(R.string.vous_faites_cette_application_pour_vous_conna_tre))
+            HowYouShouldBeToDo(explanations = stringResource(R.string.avec_des_fausses_informations_le_r_sultat_sera_non_pr_cis))
+            HowYouShouldBeToDo(explanations = stringResource(R.string.tu_peux_tre_plus_disciplin_et_heureux))
         }
 
         Text(
-            text = "Click submit if you are sure you want to complete all the quiz",
+            text = stringResource(R.string.cliquer_commencer_si_vous_tes_pr_t_r_pondre_toutes_les_questions),
             style = MaterialTheme.typography.labelMedium,
             modifier = Modifier
                 .padding(
@@ -202,13 +209,13 @@ fun ContentDetailsApp(
         )
 
         MyCardButton(
-            nameOfAction = "BEGIN",
+            nameOfAction = stringResource(R.string.commencer),
             brush = reusableBrush()
-        ){
+        ) {
             /**
              * NAVIGATE COMPOSANT TO ASK QUESTION
              */
-            navController.navigate(OctaPersonaQuizScreen.Questioning.name)
+            navController.navigate("${OctaPersonaQuizScreen.Questioning.name}/${name}")
         }
     }
 }
@@ -220,10 +227,10 @@ fun ContentDetailsApp(
 fun ElementDetail(
     title: String,
     explanations: String
-){
-    Row (
+) {
+    Row(
         modifier = Modifier.padding(bottom = 15.dp)
-    ){
+    ) {
         Icon(
             imageVector = Icons.Default.Star,
             contentDescription = "",
@@ -251,7 +258,7 @@ fun ElementDetail(
 @Composable
 fun HowYouShouldBeToDo(
     explanations: String
-){
+) {
     Row(
         modifier = Modifier.padding(
             end = 30.dp,
@@ -269,17 +276,19 @@ fun HowYouShouldBeToDo(
         )
     }
 }
+
 @Preview(
     uiMode = Configuration.UI_MODE_NIGHT_YES,
     name = "DefaultPreviewLight"
 )
 @Preview(showBackground = true)
 @Composable
-fun ShowPreview1(){
+fun ShowPreview1() {
     AppTheme {
-        Surface(tonalElevation = 10.dp){
+        Surface(tonalElevation = 10.dp) {
             ShowAboutTheApp(
-                navController = rememberNavController()
+                navController = rememberNavController(),
+                "Jason"
             )
         }
     }

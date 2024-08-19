@@ -44,7 +44,7 @@ import mg.geit.trioQuizzers.ui.theme.AppTheme
 @Composable
 fun ListAccountUser(
     navController: NavController
-){
+) {
     Box {
         Header(
             navController,
@@ -60,7 +60,7 @@ fun ListAccountUser(
 @Composable
 fun ContentListUser(
     navController: NavController
-){
+) {
     val listUser = ListUser.getListUser().toMutableList()
     Row(
         modifier = Modifier
@@ -69,7 +69,7 @@ fun ContentListUser(
             .clip(RoundedCornerShape(25.dp))
             .background(MaterialTheme.colorScheme.surfaceColorAtElevation(10.dp)) // Utilise la couleur de fond du thème
 
-    ){
+    ) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(1),
             modifier = Modifier
@@ -77,7 +77,7 @@ fun ContentListUser(
                 .fillMaxWidth()
                 .fillMaxSize()
         ) {
-            items(listUser){ user ->
+            items(listUser) { user ->
                 run {
                     ShowAuser(
                         user,
@@ -96,7 +96,7 @@ fun ContentListUser(
 fun ShowAuser(
     user: User,
     navController: NavController
-){
+) {
     OutlinedCard(
         elevation = CardDefaults.cardElevation(10.dp),
         modifier = Modifier
@@ -104,13 +104,16 @@ fun ShowAuser(
             .width(500.dp)
             .padding(8.dp),
         onClick = {
-            navController.navigate(OctaPersonaQuizScreen.AboutTheApp.name)
+            navController.navigate("${OctaPersonaQuizScreen.Result.name}/${user.name}")
         }
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 12.dp), // Padding pour ajouter de l'espace horizontal
+                .padding(
+                    horizontal = 16.dp,
+                    vertical = 12.dp
+                ), // Padding pour ajouter de l'espace horizontal
             verticalAlignment = Alignment.CenterVertically, // Centrer verticalement les éléments
             horizontalArrangement = Arrangement.Center // Écarter les éléments
         ) {
@@ -150,12 +153,12 @@ fun ShowAuser(
 )
 @Preview(showBackground = true)
 @Composable
-fun ShowPreview(){
+fun ShowPreview() {
     AppTheme {
-       Surface(tonalElevation = 10.dp){
-           ListAccountUser(
-               navController = rememberNavController()
-           )
-       }
+        Surface(tonalElevation = 10.dp) {
+            ListAccountUser(
+                navController = rememberNavController()
+            )
+        }
     }
 }

@@ -18,6 +18,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
@@ -47,7 +48,7 @@ fun HomeScreen(
 @Composable
 fun ContentHomeScreen(
     goToRegistrationActivity: () -> Unit
-){
+) {
     val infiniteTransition = rememberInfiniteTransition(label = "infinite transition")
     val scale by infiniteTransition.animateFloat(
         initialValue = 1f,
@@ -61,13 +62,13 @@ fun ContentHomeScreen(
         modifier = Modifier.fillMaxSize()
     ) {
         Text(
-            text = "Find your profile with ",
+            text = stringResource(R.string.trouves_ta_personnalit_avec),
             style = MaterialTheme.typography.labelLarge,
             modifier = Modifier.padding(top = 30.dp),
             color = colorResource(R.color.blue_sky1),
         )
         NameOfProject(scale = scale)
-            ContainerImageBackground()
+        ContainerImageBackground()
         ButtonStart(
             goToRegistrationActivity,
             scale,
@@ -79,9 +80,9 @@ fun ContentHomeScreen(
         Text(
             text = buildAnnotatedString {
                 withStyle(style = SpanStyle(color = colorResource(R.color.blue_sky1))) {
-                    append("Created by ")
+                    append(stringResource(R.string.cr_e_par))
                 }
-                append("Trinome")
+                append(stringResource(R.string.trinome))
             },
             style = MaterialTheme.typography.labelLarge,
         )

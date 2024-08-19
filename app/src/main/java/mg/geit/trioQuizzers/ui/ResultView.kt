@@ -1,7 +1,6 @@
 package mg.geit.trioQuizzers.ui
 
 import android.content.res.Configuration
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -24,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -38,22 +38,24 @@ import mg.geit.trioQuizzers.ui.theme.reusableBrush
 
 @Composable
 fun ResultScreen(
-    navController: NavController
-){
+    navController: NavController,
+    name: String
+) {
     Box {
         Header(
             navController,
-            OctaPersonaQuizScreen.Questioning.name
+            "${OctaPersonaQuizScreen.Result.name}/${name}"
         )
-        ContentResult(navController)
+        ContentResult(navController, name)
     }
 }
 
 @Composable
 fun ContentResult(
-    navController: NavController
-){
-    Column (
+    navController: NavController,
+    name: String
+) {
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(top = 70.dp)
@@ -61,74 +63,98 @@ fun ContentResult(
             .background(
                 MaterialTheme.colorScheme.surfaceColorAtElevation(15.dp)
             )
-        // Utilise la couleur de fond du thème
-    ){
-        val profilePointsMap = mutableMapOf<String, Int>()
-        for(i: Int in 0..7) {
-            val profil = ListQuestions.getPersonality(i)
-            val totalPoint = ListQuestions.totalPointPersonnality(i + 1)
-            profilePointsMap[profil] = totalPoint
+    ) {
+        val sortedProfilePointsMap : Map<String, Int>
+        if (ListUser.selectUserByName(name).result.isEmpty()){
+            val profilePointsMap = mutableMapOf<String, Int>()
+            for (i: Int in 0..7) {
+                val profil = ListQuestions.getPersonality(i)
+                val totalPoint = ListQuestions.totalPointPersonnality(i + 1)
+                profilePointsMap[profil] = totalPoint
+            }
+            /**
+             *  Trier le map en ordre décroissant en fonction des valeurs (points)
+             */
+            sortedProfilePointsMap = profilePointsMap
+                .entries
+                .sortedByDescending { it.value }
+                .associate { it.key to it.value }
         }
-        /**
-         *  Trier le map en ordre décroissant en fonction des valeurs (points)
-         */
-        val sortedProfilePointsMap = profilePointsMap
-            .entries
-            .sortedByDescending { it.value }
-            .associate { it.key to it.value }
-
-        Log.i("TRY",sortedProfilePointsMap.toString())
-        DisplayTop3AndLastProfiles(navController, sortedProfilePointsMap)
+        else sortedProfilePointsMap = ListUser.selectUserByName(name).result
+        DisplayTop3AndLastProfiles(navController, sortedProfilePointsMap, name)
     }
 }
 
 @Composable
 fun DisplayTop3AndLastProfiles(
     navController: NavController,
-    sortedProfilPointsMap: Map<String, Int>
-){
+    sortedProfilPointsMap: Map<String, Int>,
+    name: String
+) {
     val sortedProfiles = sortedProfilPointsMap.keys.toList()
     val profil1 = sortedProfiles[0]
     val profil2 = sortedProfiles[1]
     val profil3 = sortedProfiles[2]
     val profil4 = sortedProfiles[sortedProfilPointsMap.size - 1]
     Column {
-        Box(modifier = Modifier.padding(top = 40.dp, bottom = 120.dp)){
+        Box(
+            modifier = Modifier.padding(top = 40.dp, bottom = 10.dp)){
             Text(
-                text = "Tu es...",
+                text = name.uppercase(),
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier
+                    .padding(horizontal = 50.dp)
+                    .clip(RoundedCornerShape(6.dp))
+                    .background(reusableBrush())
+                    .fillMaxWidth(),
+                textAlign = TextAlign.Center
+            )
+        }
+        Box(modifier = Modifier.padding(top = 10.dp, bottom = 120.dp)) {
+            Text(
+                text = stringResource(R.string.tu_es),
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.labelLarge
             )
         }
-        Row{
+        Row {
             Column(
                 modifier = Modifier.weight(1f),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
-            ){
-                PersonnalityCardResult(totalPoint = sortedProfilPointsMap[profil2], personnality = profil2)
+            ) {
+                PersonnalityCardResult(
+                    totalPoint = sortedProfilPointsMap[profil2],
+                    personnality = profil2
+                )
             }
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .offset(y = (-90).dp), // Ajustez la valeur selon vos besoins ,
+                    .offset(y = (-90).dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
-            ){
-                PersonnalityCardResult(totalPoint = sortedProfilPointsMap[profil1], personnality = profil1)
+            ) {
+                PersonnalityCardResult(
+                    totalPoint = sortedProfilPointsMap[profil1],
+                    personnality = profil1
+                )
             }
             Column(
                 modifier = Modifier.weight(1f),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
-            ){
-                PersonnalityCardResult(totalPoint = sortedProfilPointsMap[profil3], personnality = profil3)
+            ) {
+                PersonnalityCardResult(
+                    totalPoint = sortedProfilPointsMap[profil3],
+                    personnality = profil3
+                )
             }
         }
-        Box(modifier = Modifier.padding(top = 40.dp)){
+        Box(modifier = Modifier.padding(top = 40.dp)) {
             Text(
-                text = "Votre dernier profil est le ...",
+                text = stringResource(R.string.votre_dernier_profil_est_le),
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.labelLarge
@@ -150,25 +176,27 @@ fun DisplayTop3AndLastProfiles(
         }
         Row {
             MyCardButton(
-                "FINISH",
+                stringResource(R.string.finir),
                 brush = reusableBrush(),
                 onSubmitAction = {
                     /**ACTION AFTER ALL */
                     /**
                      * ADD THE RESULT
                      */
+                    ListUser.selectUserByName(name).result = sortedProfilPointsMap
                     navController.navigate(OctaPersonaQuizScreen.ShowUser.name)
                 }
             )
         }
     }
 }
+
 @Composable
 fun PersonnalityCardResult(
     totalPoint: Int?,
     personnality: String,
-){
-    Box(modifier = Modifier.size(90.dp)){
+) {
+    Box(modifier = Modifier.size(90.dp)) {
         Image(
             painter = painterResource(R.drawable.ellipse_10),
             contentDescription = "",
@@ -203,11 +231,12 @@ fun PersonnalityCardResult(
 )
 @Preview(showBackground = true)
 @Composable
-fun ShowResult(){
+fun ShowResult() {
     AppTheme {
-        Surface(tonalElevation = 10.dp){
+        Surface(tonalElevation = 10.dp) {
             ResultScreen(
-                navController = rememberNavController()
+                navController = rememberNavController(),
+                "Jason"
             )
         }
     }

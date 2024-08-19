@@ -26,7 +26,7 @@ enum class OctaPersonaQuizScreen(@StringRes val title: Int) {
 }
 
 @Composable
-fun OctaPersonaQuizApp(){
+fun OctaPersonaQuizApp() {
     val navController = rememberNavController()
     val listUser = ListUser
     Scaffold { innerPadding ->
@@ -35,35 +35,44 @@ fun OctaPersonaQuizApp(){
             startDestination = OctaPersonaQuizScreen.Start.name,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable(route =  OctaPersonaQuizScreen.Start.name) {
+            composable(route = OctaPersonaQuizScreen.Start.name) {
                 HomeScreen(
                     navController
                 )
             }
-            composable(route = OctaPersonaQuizScreen.Registration.name){
+            composable(route = OctaPersonaQuizScreen.Registration.name) {
                 RegistrationMainView(
                     listUser,
                     navController
                 )
             }
-            composable(route = OctaPersonaQuizScreen.ShowUser.name){
+            composable(route = OctaPersonaQuizScreen.ShowUser.name) {
                 ListAccountUser(
                     navController
                 )
             }
-            composable(route = OctaPersonaQuizScreen.AboutTheApp.name){
+            composable(route = "${OctaPersonaQuizScreen.AboutTheApp.name}/{name}")
+            { backStackEntry ->
+                val name = backStackEntry.arguments?.getString("name").toString()
                 ShowAboutTheApp(
-                    navController
+                    navController,
+                    name
                 )
             }
-            composable(route = OctaPersonaQuizScreen.Questioning.name){
+            composable(route = "${OctaPersonaQuizScreen.Questioning.name}/{name}")
+            { backStackEntry ->
+                val name = backStackEntry.arguments?.getString("name").toString()
                 QuizScreen(
-                    navController
+                    navController,
+                    name
                 )
             }
-            composable(route = OctaPersonaQuizScreen.Result.name){
+            composable(route = "${OctaPersonaQuizScreen.Result.name}/{name}")
+            { backStackEntry ->
+                val name = backStackEntry.arguments?.getString("name").toString()
                 ResultScreen(
-                    navController
+                    navController,
+                    name
                 )
             }
         }
