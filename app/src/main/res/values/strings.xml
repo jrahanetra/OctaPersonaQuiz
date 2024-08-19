@@ -6,6 +6,7 @@
     <string name="about_the_app">About the App</string>
     <string name="user_questioning">User Questioning</string>
     <string name="result_questioning">Result Questioning</string>
+    <string name="finish_Activity">Quitter</string>
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
@@ -78,4 +79,5 @@
     <string name="votre_dernier_profil_est_le">Votre dérnier profil est le …</string>
     <string name="tu_es">Tu es…</string>
     <string name="finir">FINIR</string>
+    <string name="refaire">REFAIRE</string>
 </resources>

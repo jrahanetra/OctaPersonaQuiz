@@ -1,10 +1,12 @@
 package mg.geit.trioQuizzers
 
+import android.app.Activity
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -22,7 +24,8 @@ enum class OctaPersonaQuizScreen(@StringRes val title: Int) {
     ShowUser(title = R.string.show_users),
     AboutTheApp(title = R.string.about_the_app),
     Questioning(title = R.string.user_questioning),
-    Result(title = R.string.result_questioning)
+    Result(title = R.string.result_questioning),
+    Quitter(title = R.string.finish_Activity),
 }
 
 @Composable
@@ -67,14 +70,22 @@ fun OctaPersonaQuizApp() {
                     name
                 )
             }
-            composable(route = "${OctaPersonaQuizScreen.Result.name}/{name}")
+            composable(route = "${OctaPersonaQuizScreen.Result.name}/{contain}/{name}")
             { backStackEntry ->
+                val contain = backStackEntry.arguments?.getString("contain").toString()
                 val name = backStackEntry.arguments?.getString("name").toString()
                 ResultScreen(
                     navController,
-                    name
+                    name,
+                    contain
                 )
             }
+            composable(route = OctaPersonaQuizScreen.Quitter.name) {
+                val context = LocalContext.current
+                val activity = context as? Activity
+                activity?.finish()
+            }
+
         }
     }
 }

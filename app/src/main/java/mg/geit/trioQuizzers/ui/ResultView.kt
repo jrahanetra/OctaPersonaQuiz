@@ -39,21 +39,23 @@ import mg.geit.trioQuizzers.ui.theme.reusableBrush
 @Composable
 fun ResultScreen(
     navController: NavController,
-    name: String
+    name: String,
+    contain: String
 ) {
     Box {
         Header(
             navController,
-            "${OctaPersonaQuizScreen.Result.name}/${name}"
+            OctaPersonaQuizScreen.ShowUser.name
         )
-        ContentResult(navController, name)
+        ContentResult(navController, name, contain)
     }
 }
 
 @Composable
 fun ContentResult(
     navController: NavController,
-    name: String
+    name: String,
+    contain: String
 ) {
     Column(
         modifier = Modifier
@@ -64,8 +66,8 @@ fun ContentResult(
                 MaterialTheme.colorScheme.surfaceColorAtElevation(15.dp)
             )
     ) {
-        val sortedProfilePointsMap : Map<String, Int>
-        if (ListUser.selectUserByName(name).result.isEmpty()){
+        val sortedProfilePointsMap: Map<String, Int>
+        if (ListUser.selectUserByName(name).result.isEmpty()) {
             val profilePointsMap = mutableMapOf<String, Int>()
             for (i: Int in 0..7) {
                 val profil = ListQuestions.getPersonality(i)
@@ -79,15 +81,38 @@ fun ContentResult(
                 .entries
                 .sortedByDescending { it.value }
                 .associate { it.key to it.value }
+        } else sortedProfilePointsMap = ListUser.selectUserByName(name).result
+        DisplayTop3AndLastProfiles(sortedProfilePointsMap, name)
+        if (contain == "result") {
+            Row {
+                MyCardButton(
+                    stringResource(R.string.finir),
+                    brush = reusableBrush(),
+                    onSubmitAction = {
+                        /**ACTION AFTER ALL */
+                        ListUser.selectUserByName(name).result = sortedProfilePointsMap
+                        navController.navigate(OctaPersonaQuizScreen.ShowUser.name)
+                    }
+                )
+            }
+        } else {
+            Row {
+                MyCardButton(
+                    nameOfAction = stringResource(R.string.refaire),
+                    brush = reusableBrush(),
+                    onSubmitAction = {
+                        /**ACTION AFTER ALL */
+                        ListUser.selectUserByName(name).result = mapOf() // LISTE VIDE AU DÉBUT
+                        navController.navigate("${OctaPersonaQuizScreen.Questioning.name}/${name}")
+                    }
+                )
+            }
         }
-        else sortedProfilePointsMap = ListUser.selectUserByName(name).result
-        DisplayTop3AndLastProfiles(navController, sortedProfilePointsMap, name)
     }
 }
 
 @Composable
 fun DisplayTop3AndLastProfiles(
-    navController: NavController,
     sortedProfilPointsMap: Map<String, Int>,
     name: String
 ) {
@@ -98,7 +123,8 @@ fun DisplayTop3AndLastProfiles(
     val profil4 = sortedProfiles[sortedProfilPointsMap.size - 1]
     Column {
         Box(
-            modifier = Modifier.padding(top = 40.dp, bottom = 10.dp)){
+            modifier = Modifier.padding(top = 40.dp, bottom = 10.dp)
+        ) {
             Text(
                 text = name.uppercase(),
                 style = MaterialTheme.typography.titleLarge,
@@ -164,7 +190,7 @@ fun DisplayTop3AndLastProfiles(
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(top = 20.dp, bottom = 20.dp),
+                    .padding(top = 20.dp, bottom = 10.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -173,20 +199,6 @@ fun DisplayTop3AndLastProfiles(
                     personnality = profil4
                 )
             }
-        }
-        Row {
-            MyCardButton(
-                stringResource(R.string.finir),
-                brush = reusableBrush(),
-                onSubmitAction = {
-                    /**ACTION AFTER ALL */
-                    /**
-                     * ADD THE RESULT
-                     */
-                    ListUser.selectUserByName(name).result = sortedProfilPointsMap
-                    navController.navigate(OctaPersonaQuizScreen.ShowUser.name)
-                }
-            )
         }
     }
 }
@@ -236,7 +248,8 @@ fun ShowResult() {
         Surface(tonalElevation = 10.dp) {
             ResultScreen(
                 navController = rememberNavController(),
-                "Jason"
+                "Jason",
+                "Result"
             )
         }
     }

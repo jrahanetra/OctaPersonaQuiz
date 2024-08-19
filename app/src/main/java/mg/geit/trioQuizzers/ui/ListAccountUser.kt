@@ -4,6 +4,7 @@ import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,6 +32,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -39,6 +41,7 @@ import androidx.navigation.compose.rememberNavController
 import mg.geit.trioQuizzers.OctaPersonaQuizScreen
 import mg.geit.trioQuizzers.R
 import mg.geit.trioQuizzers.ui.components.Header
+import mg.geit.trioQuizzers.ui.components.MyCardButton
 import mg.geit.trioQuizzers.ui.theme.AppTheme
 
 @Composable
@@ -79,13 +82,31 @@ fun ContentListUser(
         ) {
             items(listUser) { user ->
                 run {
-                    ShowAuser(
-                        user,
-                        navController
-                    )
+                    Column {
+                        ShowAuser(
+                            user,
+                            navController
+                        )
+                    }
                 }
             }
         }
+    }
+    Column(
+        modifier = Modifier.padding(top = 700.dp)
+    ) {
+        MyCardButton(
+            nameOfAction = "Quitter",
+            brush = Brush.linearGradient(
+                colors = listOf(
+                    colorResource(R.color.errorColor),
+                    colorResource(R.color.colorBrush1)
+                )
+            ),
+            onSubmitAction = {
+                navController.navigate(OctaPersonaQuizScreen.Quitter.name)
+            }
+        )
     }
 }
 
@@ -104,7 +125,7 @@ fun ShowAuser(
             .width(500.dp)
             .padding(8.dp),
         onClick = {
-            navController.navigate("${OctaPersonaQuizScreen.Result.name}/${user.name}")
+            navController.navigate("${OctaPersonaQuizScreen.Result.name}/historique/${user.name}")
         }
     ) {
         Row(

@@ -57,7 +57,7 @@ fun QuizScreen(
             currentQuestionIndex,
             listQuestion,
             submitAction = {
-                navController.navigate("${OctaPersonaQuizScreen.Result.name}/${name}")
+                navController.navigate("${OctaPersonaQuizScreen.Result.name}/result/${name}")
             }
         )
     }
