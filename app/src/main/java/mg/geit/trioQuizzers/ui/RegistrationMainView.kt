@@ -184,7 +184,7 @@ fun ContentView(
                     }
                 } else {
                     errorVerification = when {
-                        !isNameTrue -> "Vérifiez votre Nom (+4 de Caractères et uniques)"
+                        !isNameTrue -> "Vérifiez votre Nom (+4 de Caractères et unique)"
                         !isNumberTrue -> "Vérifiez votre numéros (10 chiffres et unique)"
                         !isEmailTrue -> "Vérifiez votre email unique"
                         else -> ""
